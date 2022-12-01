@@ -60,6 +60,8 @@
   <link href="vendors/@coreui/chartjs/css/coreui-chartjs.css" rel="stylesheet">
 
   <script type="text/javascript" src="https://www.chartjs.org/dist/2.8.0/Chart.min.js"></script>
+  <script src=//cdn.jsdelivr.net/npm/sweetalert2@11></script>
+  <script src=https://cdn.jsdelivr.net/npm/sweetalert2@11></script>
 </head>
 
 <body>
@@ -502,8 +504,7 @@
 
                 <script>
 
-                  contador = 0 
-
+                  contador = 0
                   let proximaAtualizacao;
 
                   window.onload = obterDadosGrafico(1);
@@ -564,10 +565,6 @@
     return false;
   }
 
-
-
-
-
                      function verificar(metrica, componente) {
 
                       var frase = ""
@@ -582,12 +579,14 @@
 
                      
 
+                
 
 
                       if(componente == "CPU"){
 
-                        if(contador <= 3){
+                        if(contador <= 2){
 
+                       
                       if(metrica >=0.5){
 
                         if ( metrica < 75) {
@@ -627,10 +626,12 @@
                       }
                       contador ++
                     }
+                     
+                    
 
                       } else if (componente == "RAM"){
-
-                        if(contador <= 3){
+                       
+                        if(contador <= 2){
 
                       if(metrica >=70){
 
@@ -668,10 +669,12 @@
                       }
                       contador ++
                     }
+                    
+                      
 
                       }else if(componente == "DISCO"){
 
-                        if(contador <= 3){
+                        if(contador <= 2){
 
                       if(metrica >=80){
 
@@ -704,6 +707,7 @@
                         criticidade = "Critico"
 
                       }
+                
 
                       alertas(metrica,email,nome,empresa,componente,frase,criticidade)
 
@@ -712,6 +716,7 @@
                       }
                       contador ++
                     }
+                    
 
                       }
 

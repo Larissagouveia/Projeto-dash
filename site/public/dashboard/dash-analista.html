@@ -485,6 +485,7 @@
                   let proximaAtualizacao;
 
                   window.onload = obterDadosGrafico(1);
+                  
 
                   // b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
 
@@ -492,14 +493,14 @@
 
 
 
-                  function obterDadosGrafico(idAquario) {
+                  function obterDadosGrafico(idChamado) {
                     // alterarTitulo(idAquario)
 
                     if (proximaAtualizacao != undefined) {
                       clearTimeout(proximaAtualizacao);
                     }
 
-                    fetch(`/dashboard/${idChamado}`, { cache: 'no-store' }).then(function (response) {
+                    fetch(`/medidas/dashboard/${idChamado}`, { cache: 'no-store' }).then(function (response) {
                       if (response.ok) {
                         response.json().then(function (resposta) {
                           console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
@@ -523,9 +524,9 @@
                       labels: [],
                       datasets: [
                         {
-                          yAxisID: 'yAxisCPU',
-                          xAxisID: 'xAxisCPU',
-                          label: 'Porcentagem de uso da CPU(%)',
+                          yAxisID: 'yAxis',
+                          xAxisID: 'xAxis',
+                          label: 'Quantidade de chamados',
                           borderColor: '#000814',
                           backgroundColor: '#118ab2',
                           pointRadius: 6,
@@ -570,7 +571,7 @@
 
                     // var ctx = canvas_grafico.getContext('2d');
                     window.grafico_linha = new Chart(canvas_grafico, {
-                      type: 'line',
+                      type: 'bar',
                       data: dados,
                       options: {
                         responsive: true,
@@ -586,7 +587,6 @@
                             type: 'linear',
                             display: true,
                             position: 'left',
-                            id: 'cpuTotem',
                             ticks: {
                               beginAtZero: true,
                               max: 100,
@@ -631,12 +631,13 @@
 
                 
 
-                    setTimeout(() => atualizarGrafico(idAquario, idChamado, dados, dados2), 2000);
+                    /* setTimeout(() => atualizarGrafico(idAquario, idChamado, dados, dados2), 2000); */
                   }
 
                   function atualizarGrafico(idAquario, idChamado, dados, dados2) {
 
-                    fetch(`/dashboard/${idChamado}`, { cache: 'no-store' }).then(function (response) {
+                    
+                    fetch(`/medidas/dashboard/${idChamado}`, { cache: 'no-store' }).then(function (response) {
                       if (response.ok) {
                         response.json().then(function (novoRegistro) {
 
