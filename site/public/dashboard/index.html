@@ -7,7 +7,7 @@
 * Licensed under MIT (https://coreui.io/license)
 -->
 <!-- Breadcrumb -->
-<html lang="en">
+<html lang="pt">
 
 <head>
   <base href="./">
@@ -60,6 +60,7 @@
   <link href="vendors/@coreui/chartjs/css/coreui-chartjs.css" rel="stylesheet">
 
   <script type="text/javascript" src="https://www.chartjs.org/dist/2.8.0/Chart.min.js"></script>
+
   <script src=//cdn.jsdelivr.net/npm/sweetalert2@11></script>
   <script src=https://cdn.jsdelivr.net/npm/sweetalert2@11></script>
 </head>
@@ -576,22 +577,11 @@
                       var nome =  sessionStorage.NOME_USUARIO
 
                       var email = sessionStorage.EMAIL_USUARIO
-
-                     
-
-                
-
-
                       if(componente == "CPU"){
-
                         if(contador <= 2){
-
-                       
-                      if(metrica >=0.5){
-
+                      if(metrica >= 0.5){
                         if ( metrica < 75) {
-
-                        alert(`Cuidado ${componente} está ficando no estado de Alerta!`);
+                          Swal.fire("Alerta", `Cuidado ${componente} está em estado de Alerta!`, "info")
 
                         frase = `O ${componente} do computador está ficando sobrecarregado! Porcentagem de Uso: ${metrica}%`
 
@@ -603,7 +593,8 @@
 
                       } else if (metrica >= 76 && metrica <=85) {
 
-                        alert(`Cuidado ${componente} está ficando no estado de Emergencia!`);
+                        Swal.fire("Emergencia", `Cuidado ${componente} está em estado Emergencial!`, "warning")
+                        
 
                         frase = `O ${componente} do computador está ficando sobrecarregado! Porcentagem de Uso: ${metrica}%`
 
@@ -611,7 +602,7 @@
 
                       } else {
 
-                        alert(`Cuidado ${componente} está ficando no estado Critico!`);
+                        Swal.fire("Crítico", `Cuidado ${componente} está em estado Crítico!`, "error")
 
                         frase = `O ${componente} do computador está ficando sobrecarregado! Porcentagem de Uso: ${metrica}%`
 
@@ -637,7 +628,10 @@
 
                       if ( metrica < 79) {
 
-                        alert(`Cuidado, ${componente} está ficando no estado de Alerta!`);
+                        
+                        setTimeout(() => {
+                          Swal.fire("Alerta", `Cuidado ${componente} está em estado de Alerta!`, "info");
+                        }, 4000)
 
                         frase = `O ${componente} do computador está ficando sobrecarregado! Porcentagem de Uso: ${metrica}%`
 
@@ -647,7 +641,9 @@
 
                       } else if (metrica >= 80 && metrica <=89) {
 
-                        alert(`Cuidado ${componente} está ficando no estado de Emergencia!`);
+                        setTimeout(() => {
+                          Swal.fire("Emergencial", `Cuidado ${componente} está em estado Emergencial!`, "warning")
+                        }, 4000)
 
                         frase = `O ${componente} do computador está ficando sobrecarregado! Porcentagem de Uso: ${metrica}%`
 
@@ -655,7 +651,9 @@
 
                       } else {
 
-                        alert(`Cuidado ${componente} está ficando no estado Critico!`);
+                        setTimeout(() => {
+                          Swal.fire("Crítico", `Cuidado ${componente} está em estado Crítico!`, "error")
+                        }, 4000)
 
                         frase = `O ${componente} do computador está ficando sobrecarregado! Porcentagem de Uso: ${metrica}%`
 
@@ -680,7 +678,10 @@
 
                       if ( metrica < 89) {
 
-                        alert(`Cuidado ${componente} está ficando no estado de Alerta!`);
+                        
+                        setTimeout(() => {
+                          Swal.fire("Alerta", `Cuidado ${componente} está em estado de Alerta!`, "info")
+                        }, 7000)
 
                         frase = `O ${componente} do computador está ficando sobrecarregado! Porcentagem de Uso: ${metrica}GB`
 
@@ -692,7 +693,9 @@
 
                       } else if (metrica >= 90 && metrica <=94) {
 
-                        alert(`Cuidado ${componente} está ficando no estado de Emergencia!`);
+                        setTimeout(() => {
+                          Swal.fire("Emergencial", `Cuidado ${componente} está em estado Emergencial!`, "warning")
+                        }, 7000)
 
                         frase = `O ${componente} do computador está ficando sobrecarregado! Porcentagem de Uso: ${metrica}GB`
 
@@ -700,7 +703,9 @@
 
                       } else {
 
-                        alert(`Cuidado ${componente} está ficando no estado Critico!`);
+                        setTimeout(() => {
+                          Swal.fire("Crítico", `Cuidado ${componente} está em estado Crítico!`, "error")
+                        }, 7000)
 
                         frase = `O ${componente} do computador está ficando sobrecarregado! Porcentagem de Uso: ${metrica}GB`
 
@@ -925,9 +930,6 @@
 
                           var cpu = novoRegistro[0].cpu
                           verificar(cpu, "CPU")
-
-
-
                           // alerta CPU
 
                           // if (novoRegistro[0].cpu >= 20 && novoRegistro[0].cpu < 94) {
