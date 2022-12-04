@@ -412,7 +412,32 @@
                       });
                   }
 
-                  function plotarGrafico(resposta, idAquario, idChamado) {
+
+                  function obterDadosTotem(idTotem) {
+                    // alterarTitulo(idAquario)
+
+                    if (proximaAtualizacao != undefined) {
+                      clearTimeout(proximaAtualizacao);
+                    }
+
+                    fetch(`/medidas/totens/${idTotem}`, { cache: 'no-store' }).then(function (response) {
+                      if (response.ok) {
+                        response.json().then(function (resposta) {
+                          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                          resposta.reverse();
+
+                          plotarGrafico(resposta);
+                        });
+                      } else {
+                        console.error('Nenhum dado encontrado ou erro na API');
+                      }
+                    })
+                      .catch(function (error) {
+                        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+                      });
+                  }
+
+                  function plotarGrafico(resposta, idAquario, idChamado, idTotem) {
                     console.log('iniciando plotagem do gráfico...');
 
                     var dados = {
@@ -438,7 +463,7 @@
                         {
                           yAxisID: 'yAxisRam',
                           xAxisID: 'xAxisRam',
-                          label: 'Porcentagem de uso da RAM(%)',
+                          label: 'Quantidade de chamados',
                           borderColor: '#000814',
                           backgroundColor: '#06d6a0',
                           pointRadius: 6,
@@ -452,8 +477,8 @@
                       var registro = resposta[i];
                       dados.labels.push(registro.componente);
                       dados.datasets[0].data.push(registro.quantidade);
-                      // dados2.labels.push(registro.momento_grafico)
-                      // dados2.datasets[0].data.push(registro.memoriaTotem * 2)
+                      dados2.labels.push(registro.fkAtm)
+                      dados2.datasets[0].data.push(registro.totens)
                       // dados3.labels.push(registro.momento_grafico)
                       // dados3.datasets[0].data.push(registro.discoTotem)
                       // dados.datasets[1].data.push(registro.memoriaTotem);
@@ -529,7 +554,7 @@
                     //  setTimeout(() => atualizarGrafico(idAquario, idChamado, dados, dados2), 2000); 
                   }
 
-                  function atualizarGrafico(idAquario, idChamado, dados, dados2) {
+                  function atualizarGrafico(idAquario, idChamado, idTotem, dados, dados2) {
 
                     
                     fetch(`/medidas/dashboard/${idChamado}`, { cache: 'no-store' }).then(function (response) {
@@ -538,7 +563,7 @@
 
                           console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
                           console.log(`Dados atuais do gráfico: ${dados}`);
-                          console.log(`Dados atuais do gráfico: ${dados2}`);
+                          //console.log(`Dados atuais do gráfico: ${dados2}`);
 
                           dados.labels.shift(); // apagar o primeiro
                           dados.labels.push(novoRegistro[0].momento_grafico); // incluir um novo momento
@@ -548,21 +573,45 @@
                           var cpu = novoRegistro[0].cpu
                           verificar(cpu, "CPU")
 
-
-                          dados2.labels.shift();  // apagar o primeiro de temperatura
-                          dados2.labels.push(novoRegistro[0].momento_grafico); // incluir uma nova medida de temperatura
-                          dados2.datasets[0].data.shift();  // apagar o primeiro de temperatura
-                          dados2.datasets[0].data.push(novoRegistro[0].memoria);
-
-                          var memoria = novoRegistro[0].memoria
-                          verificar(memoria, "RAM")
-
                           window.grafico_linha.update();
-                          window.grafico_linha2.update();
+                         
                           //window.grafico_linha3.update();
 
                           // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-                          proximaAtualizacao = setTimeout(() => atualizarGrafico(idAquario, idChamado, dados, dados2), 2000);
+                          proximaAtualizacao = setTimeout(() => atualizarGrafico(idAquario, idChamado, dados), 2000);
+                        });
+                      } else {
+                        console.error('Nenhum dado encontrado ou erro na API');
+                        // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
+                      }
+                    })
+                      .catch(function (error) {
+                        console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+                      });
+
+
+                      fetch(`/medidas/totens/${idTotem}`, { cache: 'no-store' }).then(function (response) {
+                      if (response.ok) {
+                        response.json().then(function (novoRegistro) {
+
+                          console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
+                         // console.log(`Dados atuais do gráfico: ${dados}`);
+                          console.log(`Dados atuais do gráfico: ${dados2}`);
+
+                          dados2.labels.shift(); // apagar o primeiro
+                          dados2.labels.push(novoRegistro[0].momento_grafico); // incluir um novo momento
+                          dados2.datasets[0].data.shift();  // apagar o primeiro de temperatura
+                          dados2.datasets[0].data.push(novoRegistro[0].ram);
+
+                          var ram = novoRegistro[0].ram
+                          verificar(ram, "RAM")
+
+                          window.grafico_linha2.update();
+                         
+                          //window.grafico_linha3.update();
+
+                          // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
+                          proximaAtualizacao = setTimeout(() => atualizarGrafico(idAquario, idTotem, dados2), 2000);
                         });
                       } else {
                         console.error('Nenhum dado encontrado ou erro na API');
@@ -620,7 +669,7 @@
                       }
                     });
                   });
-                </script> -->
+                </script> --> 
 
 
                 <!-- End Line CHart -->
