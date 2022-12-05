@@ -62,11 +62,11 @@ function buscar(req, res) {
 
 function buscarTotem(req, res) {
 
-    var idTotem = req.params.idTotem;
+    var fkAtm = req.params.fkAtm;
 
     console.log(`Recuperando medidas em tempo real`);
 
-    medidaModel.buscar(idTotem).then(function (resultado) {
+    medidaModel.buscarTotem(fkAtm).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {

@@ -15,8 +15,8 @@ router.get("/dashboard/:idChamado", function (req, res) {
     medidaController.buscar(req, res);
 })
 
-router.get("/totens/:idTotem", function (req, res) {
-    medidaController.buscar(req, res);
+router.get("/totens/:fkAtm", function (req, res) {
+    medidaController.buscarTotem(req, res);
 })
 
 module.exports = router;

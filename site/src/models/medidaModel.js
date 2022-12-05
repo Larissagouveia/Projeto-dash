@@ -96,15 +96,15 @@ function buscar(idChamado) {
     return database.executar(instrucaoSql);
 }
 
-function buscarTotem(idTotem) {
+function buscarTotem(fkAtm) {
 
     instrucaoSql = ''
 
     if (process.env.AMBIENTE_PROCESSO == "producao") {
-        instrucaoSql = `select fkAtm, count(fkAtm) as "totens" from Chamados group by fkAtm`;
+        instrucaoSql = `select fkAtm, count(fkAtm) as "chamados" from Chamados group by fkAtm`;
 
     } else if (process.env.AMBIENTE_PROCESSO == "desenvolvimento") {
-        instrucaoSql = `select fkAtm, count(fkAtm) as "totens" from Chamados group by fkAtm`;
+        instrucaoSql = `select fkAtm, count(fkAtm) as "chamados" from Chamados group by fkAtm`;
     } else {
         console.log("\nO AMBIENTE (produção OU desenvolvimento) NÃO FOI DEFINIDO EM app.js\n");
         return
